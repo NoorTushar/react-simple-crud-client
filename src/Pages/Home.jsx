@@ -19,12 +19,18 @@ const Home = () => {
          body: JSON.stringify(user),
       })
          .then((res) => res.json())
-         .then((data) => console.log(data))
+         .then((data) => {
+            console.log(data);
+            if (data.insertedId) {
+               alert("user was added successfully to database");
+               form.reset();
+            }
+         })
          .catch((err) => console.log(err));
    };
 
    return (
-      <div>
+      <div className="text-center py-[40px]">
          <h1 className="text-2xl text-red-400 text-center">Simple CRUD</h1>
 
          <form onSubmit={handleAddUser} className="max-w-sm mx-auto space-y-4">
