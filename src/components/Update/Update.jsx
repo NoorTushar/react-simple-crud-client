@@ -5,12 +5,23 @@ const Update = () => {
 
    const handleUpdateUser = (event) => {
       event.preventDefault();
-
       const form = event.target;
       const name = form.name.value;
       const email = form.email.value;
+      const updatedUser = { name, email };
 
-      console.log(name, email);
+      fetch(`http://localhost:3000/users/${user._id}`, {
+         method: "PUT",
+         headers: { "content-type": "application/json" },
+         body: JSON.stringify(updatedUser),
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            console.log(data);
+            if (data.modifiedCount > 0) {
+               alert("user is being updated");
+            }
+         });
    };
 
    return (
