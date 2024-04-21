@@ -1,7 +1,9 @@
-import { json, useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import { Link, json, useLoaderData } from "react-router-dom";
 
 const Users = () => {
-   const users = useLoaderData();
+   const loadedUsers = useLoaderData();
+   const [users, setUsers] = useState(loadedUsers);
 
    const handleDeleteUser = (id) => {
       console.log(id);
@@ -13,6 +15,8 @@ const Users = () => {
             console.log(data);
             if (data.deletedCount > 0) {
                alert("Data removed from database");
+               const remaining = users.filter((user) => user._id !== id);
+               setUsers(remaining);
             }
          })
          .catch((err) => console.error(err));
@@ -34,6 +38,11 @@ const Users = () => {
                         </h2>
                         <p>{user.email}</p>
                         <div className="card-actions justify-end">
+                           <Link to={`/users/${user._id}`}>
+                              <button className="btn btn-secondary">
+                                 Update User
+                              </button>
+                           </Link>
                            <button
                               onClick={() => {
                                  handleDeleteUser(user._id);
